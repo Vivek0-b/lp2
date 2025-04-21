@@ -1,0 +1,46 @@
+import heapq
+
+class Graph:
+    def __init__(self, vertices):
+        self.vertices = vertices
+        self.adjacency_list = {v: [] for v in vertices}
+
+    def add_edge(self, u, v, weight):
+        self.adjacency_list[u].append((v, weight))
+        self.adjacency_list[v].append((u, weight))
+
+    def prim(self):
+        start_vertex = self.vertices[0]
+        visited = set()
+        min_heap = []
+        mst = []
+
+        # Add all edges from the start vertex to the min heap
+        visited.add(start_vertex)
+        for neighbor, weight in self.adjacency_list[start_vertex]:
+            heapq.heappush(min_heap, (weight, start_vertex, neighbor))
+
+        while min_heap and len(visited) < len(self.vertices):
+            weight, u, v = heapq.heappop(min_heap)
+            if v not in visited:
+                visited.add(v)
+                mst.append((u, v, weight))
+                for neighbor, w in self.adjacency_list[v]:
+                    if neighbor not in visited:
+                        heapq.heappush(min_heap, (w, v, neighbor))
+
+        return mst
+
+# Example usage
+vertices = [0, 1, 2, 3]
+g = Graph(vertices)
+g.add_edge(0, 1, 5)
+g.add_edge(0, 2, 10)
+g.add_edge(0, 3, 3)
+g.add_edge(1, 3, 1)
+g.add_edge(2, 3, 4)
+
+minimum_spanning_tree = g.prim()
+print("Minimum Spanning Tree (Prim's):")
+for edge in minimum_spanning_tree:
+    print(edge)
