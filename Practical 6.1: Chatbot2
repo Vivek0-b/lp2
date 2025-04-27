@@ -1,0 +1,66 @@
+import random
+
+class Chatbot:
+    def __init__(self):
+        self.faqs = {
+            'hello': ['Hi! How can I assist you today?', 'Hello! How can I help you?'],
+            'help': ['I can assist with common issues. Type your query or ask for help.'],
+            'order': ['You can place an order by visiting our website.'],
+            'shipping': ['Shipping usually takes 3-5 business days. Check on webiste for more details'],
+            'refund': ['For refund inquiries, please contact our support team directly.'],
+            'thanks': ['You\'re welcome! Let me know if you need anything else.'],
+            'bye': ['Goodbye! Have a great day!', 'See you later!'],
+        }
+        self.user_name = None
+
+    def greet_user(self, user_input):
+        if self.user_name is None and 'my name is' in user_input.lower():
+            
+            self.user_name = user_input.split('my name is ')[1]
+            return f"Nice to meet you, {self.user_name}!"
+        elif 'hello' in user_input.lower():
+            return random.choice(self.faqs['hello'])
+        else:
+            return None
+
+    def handle_query(self, user_input):
+        user_input = user_input.lower()
+        for key in self.faqs:
+            if key in user_input:
+                return random.choice(self.faqs[key])
+        
+        return "Sorry, I didn't quite understand that. Could you please clarify?"
+
+    def handle_goodbye(self, user_input):
+        
+        if 'bye' in user_input.lower():
+            return random.choice(self.faqs['bye'])
+        return None
+
+    def respond(self, user_input):
+        
+        greeting_response = self.greet_user(user_input)
+        if greeting_response:
+            return greeting_response
+        goodbye_response = self.handle_goodbye(user_input)
+        if goodbye_response:
+            return goodbye_response
+        return self.handle_query(user_input)
+
+def chat():
+    print("Welcome to the Customer Support Chatbot!")
+    print("Type 'bye' anytime to exit.\n")
+    
+    bot = Chatbot()
+    
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() == 'bye':
+            print(f"Bot: {bot.respond(user_input)}")
+            break
+        else:
+            print(f"Bot: {bot.respond(user_input)}")
+
+if __name__ == "__main__":
+    chat()
