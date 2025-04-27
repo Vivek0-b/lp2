@@ -1,3 +1,6 @@
+# bACKTRACKING APPROACH 
+
+
 import copy
 import random
 
@@ -90,3 +93,74 @@ print_solution(solutions, n)
 
 print()
 print("Total number of solutions=", len(solutions))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# BRANCH AND NOUND APPROACH
+
+# Branch and Bound approach for solving N-Queens problem
+
+def is_safe(board, row, col, n):
+    # Check if it's safe to place a queen at (row, col)
+    for i in range(row):
+        if board[i] == col or board[i] - i == col - row or board[i] + i == col + row:
+            return False
+    return True
+
+def branch_and_bound(board, row, n, min_conflict_board):
+    if row == n:
+        return True
+    
+    # Sort columns by least conflicts (for branch and bound)
+    columns = list(range(n))
+    min_conflicts = n  # Start with the worst case
+    
+    for col in columns:
+        if is_safe(board, row, col, n):
+            board[row] = col
+            # Find the minimum conflicts for next rows
+            conflicts = 0
+            for r in range(row + 1, n):
+                if not is_safe(board, r, col, n):
+                    conflicts += 1
+            if conflicts < min_conflicts:
+                min_conflicts = conflicts
+                if branch_and_bound(board, row + 1, n, min_conflict_board):
+                    return True
+            board[row] = -1  # Backtrack
+    
+    return False
+
+def print_solution(board, n):
+    for i in range(n):
+        row = ['Q' if x == board[i] else '.' for x in range(n)]
+        print(" ".join(row))
+
+def n_queens_branch_and_bound(n):
+    # Create a board with n rows and n columns, initialize all values to -1
+    board = [-1] * n
+    
+    # Solve the problem
+    if branch_and_bound(board, 0, n, []):
+        print_solution(board, n)
+    else:
+        print("Solution does not exist")
+
+# Example usage
+n = 4  # Try 4-Queens
+n_queens_branch_and_bound(n)
+
