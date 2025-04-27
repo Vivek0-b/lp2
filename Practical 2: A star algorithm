@@ -1,3 +1,5 @@
+#Done using set other way to do it is priority queue 
+
 def astaralgo(start_node,stop_node):
     
     open_set = set(start_node)
