@@ -1,0 +1,97 @@
+🟢 Step 1: Sign in to AWS Console
+Go to https://aws.amazon.com.
+
+Click "Sign in to Console" in the top right.
+
+Use your root user or IAM user credentials to log in.
+
+🟢 Step 2: Launch an EC2 Instance
+In the AWS Management Console, in the search bar, type EC2 and select EC2 Dashboard.
+
+Click Launch Instance.
+
+Fill in the following details:
+Name: UbuntuWebServer (or any name you prefer).
+
+AMI (Operating System): Choose Ubuntu Server 22.04 LTS (HVM), SSD Volume Type.
+
+Instance Type: Select t2.micro (Free Tier eligible).
+
+Key Pair:
+
+If you don’t have a key pair, click Create new key pair.
+
+Name it (e.g., ubuntu-key).
+
+Key type: Choose RSA.
+
+Format: Select .pem.
+
+Click Download Key Pair (save this file safely — you'll need it for SSH access).
+
+Network Settings: Click Edit to configure inbound rules:
+
+Allow SSH (port 22) from your IP (for secure access).
+
+Allow HTTP (port 80) from Anywhere (0.0.0.0/0) (to serve web traffic).
+
+Storage: Leave the default storage as 8 GB.
+
+Click Launch Instance.
+
+🟢 Step 3: Connect to Your Ubuntu EC2 Instance via SSH
+Go to the EC2 Dashboard > Instances.
+
+Select your instance and wait until the Instance State is Running.
+
+Copy the Public IPv4 address (e.g., 3.123.45.67).
+
+Open a terminal on your local machine and navigate to the folder where you saved your .pem key file.
+
+
+cd /path/to/your/key
+chmod 400 ubuntu-key.pem
+ssh -i "ubuntu-key.pem" ubuntu@<your-public-ip>
+Replace <your-public-ip> with the actual IP address you copied from the AWS Console (e.g., 3.123.45.67).
+
+Step 4: Update and Install Apache Web Server
+Once connected to your EC2 instance via SSH, run the following commands to update your packages:
+sudo apt update
+sudo apt upgrade -y
+Install Apache:
+sudo apt install apache2 -y
+Start Apache and enable it to run on boot:
+sudo systemctl start apache2
+sudo systemctl enable apache2
+ Step 5: Configure the Firewall (if needed)
+Note: Ubuntu EC2 instances usually don’t use ufw (Ubuntu Firewall) by default when running on AWS, so you may not need to do this unless explicitly required.
+
+Ensure HTTP traffic is allowed through your Security Group in AWS:
+
+Go to the EC2 Dashboard > Security Groups.
+
+Find the Security Group attached to your instance.
+
+Click Inbound Rules > Edit.
+
+Add a new rule:
+
+Type: HTTP
+
+Port: 80
+
+Source: Anywhere (0.0.0.0/0)
+
+Click Save.
+
+🟢 Step 6: Test the Web Server
+Open your web browser.
+
+Enter the public IP address of your instance in the browser:
+
+http://<your-public-ip>
+You should see the default Apache2 Ubuntu Default Page.
+Step 7: (Optional) Replace the Default Web Page
+To replace the default page with your own custom message, create a simple HTML file
+echo "<h1>My Final Exam Web Server is Working!</h1>" | sudo tee /var/www/html/index.html
+Refresh your browser, and you should now see the message "My Final Exam Web Server is Working!".
