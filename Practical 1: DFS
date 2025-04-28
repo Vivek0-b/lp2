@@ -1,0 +1,52 @@
+class Graph:
+    def _init_(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        # Add an undirected edge between u and v
+        if u not in self.graph:
+            self.graph[u] = []
+        if v not in self.graph:
+            self.graph[v] = []
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    def dfs_recursive(self, vertex, visited):
+        visited.add(vertex)
+        print(vertex, end=' ')  # Visit the current node
+        for neighbor in self.graph[vertex]:
+            if neighbor not in visited:
+                self.dfs_recursive(neighbor, visited)
+
+    def dfs_all(self):
+        visited = set()
+        for vertex in self.graph:
+            if vertex not in visited:
+                self.dfs_recursive(vertex, visited)
+
+    def print_graph(self):
+        print("Graph:")
+        for node, neighbors in self.graph.items():
+            print(f"{node} -> {neighbors}")
+
+
+# 🔧 Sample Usage
+if _name_ == "_main_":
+    g = Graph()
+
+    # Add edges (undirected)
+    edges = [
+        ('A', 'B'), ('A', 'C'),
+        ('B', 'D'), ('C', 'E'),
+        ('E', 'F'), ('F', 'G'),
+        # Disconnected component
+        ('H', 'I')
+    ]
+
+    for u, v in edges:
+        g.add_edge(u, v)
+
+    g.print_graph()
+    
+    print("\nDFS Traversal (Recursive):")
+    g.dfs_all()
