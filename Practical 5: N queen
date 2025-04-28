@@ -21,7 +21,7 @@ def get_board(n):
     return board
 
 def print_solution(solutions, n):
-    x = random.randint(0,len(solutions)-1)
+    x = random.randint(0,len(solutions)-1)         #pick random index between 0 and length
     for row in solutions[x]:
         print(" ".join(row))
 
