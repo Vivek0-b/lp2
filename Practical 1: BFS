@@ -1,7 +1,7 @@
 from collections import deque
 
 class Graph:
-    def _init_(self):
+    def __init__(self):
         self.graph = {}
 
     def add_edge(self, u, v):
@@ -42,7 +42,7 @@ class Graph:
 
 
 # 🔧 Sample usage
-if _name_ == "_main_":
+if __name__ == "__main__":
     g = Graph()
 
     # Add undirected edges
