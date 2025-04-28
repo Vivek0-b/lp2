@@ -1,0 +1,29 @@
+Practical 9: Configure google app engine 
+
+Go to google app engine 
+Then dashboard 
+Then new project create 
+Then search admin api 
+Then app engine api enable 
+Then on upper bar active cloud shell
+Then go to github create one file with the code then create that file .py then just write rpint(“hello world ”)
+Then copy the path of that file 
+Then go on cloud shell then type rm -rf Lp2 if already git clone present 
+Then type ls to check any file if any remove it then write git clone and the path 
+Now ls command to see the file 
+Then if we make any changes in the github file then remove it and again clone it 
+
+
+Practical 10: Create a Apex using salesforce 
+Go to https://orgfarm-a243e771ff-dev-ed.develop.lightning.force.com/lightning/page/home
+Developer console write code then debug 
+
+Practical 11: 
+
+Setup - object manager - create - custom objects - create object and save and new atleast 4 objects - then add field and relationship - then new then text data type do same for both the table 
+Now we need to create the tab 
+So setup then search tab 
+Then click on new now we need to create tab for object we have created 
+
+Now next is app creation 
+Setup search app - app manager- new lighting app 
