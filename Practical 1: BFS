@@ -1,0 +1,63 @@
+from collections import deque
+
+class Graph:
+    def _init_(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        # Undirected edge
+        if u not in self.graph:
+            self.graph[u] = []
+        if v not in self.graph:
+            self.graph[v] = []
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    def bfs_recursive(self, queue, visited):
+        if not queue:
+            return
+        
+        current = queue.popleft()
+        print(current, end=' ')
+
+        for neighbor in self.graph[current]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+        self.bfs_recursive(queue, visited)
+
+    def bfs_all(self):
+        visited = set()
+        for node in self.graph:
+            if node not in visited:
+                queue = deque([node])
+                visited.add(node)
+                self.bfs_recursive(queue, visited)
+
+    def print_graph(self):
+        print("Graph:")
+        for node, neighbors in self.graph.items():
+            print(f"{node} -> {neighbors}")
+
+
+# 🔧 Sample usage
+if _name_ == "_main_":
+    g = Graph()
+
+    # Add undirected edges
+    edges = [
+        ('A', 'B'), ('A', 'C'),
+        ('B', 'D'), ('C', 'E'),
+        ('E', 'F'), ('F', 'G'),
+        # Disconnected component
+        ('H', 'I')
+    ]
+
+    for u, v in edges:
+        g.add_edge(u, v)
+
+    g.print_graph()
+
+    print("\nBFS Traversal (Recursive):")
+    g.bfs_all()
