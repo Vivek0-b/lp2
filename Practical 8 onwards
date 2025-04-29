@@ -27,6 +27,22 @@ Then click on new now we need to create tab for object we have created
 
 Now next is app creation 
 Setup search app - app manager- new lighting app 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class First
 
 public static void sendMail(String address, string subject, String body) (
